@@ -35,16 +35,16 @@ typedef struct
     enum WordKind kind;
 } TabResult;
 
-const char *prompt = "~~>";
-const char *stackPrompt = "TOP ->";
-const char *bottomPrompt = "Thanks for using my app!!";
-WINDOW *stackWin, *mainWin, *bottomWin, *tabWin = NULL;
-int xMaxMain, yMaxMain, xMaxStack, yMaxStack, xMaxStdScr, yMaxStdScr;
-int line = 1, col = 0, row = 0, endLine = 0;
-char *buffer[MAX_LINE];
-char *bufferColor[MAX_LINE];
-enum Mode mode = NORMAL;
-int tabSelect = 0, tabStart = 0;
+extern const char *prompt;
+extern const char *stackPrompt;
+extern const char *bottomPrompt;
+extern WINDOW *stackWin, *mainWin, *bottomWin, *tabWin;
+extern int xMaxMain, yMaxMain, xMaxStack, yMaxStack, xMaxStdScr, yMaxStdScr;
+extern int line, col, row, endLine;
+extern char *buffer[MAX_LINE];
+extern char *bufferColor[MAX_LINE];
+extern enum Mode mode;
+extern int tabSelect, tabStart;
 
 void insertChar(char[], char, int);
 void removeChar(char[], int);

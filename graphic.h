@@ -19,11 +19,11 @@ typedef struct
     int ref;
 } Variable;
 
-SDL_Window *window = NULL;
-SDL_Renderer *renderer = NULL;
+extern SDL_Window *window;
+extern SDL_Renderer *renderer;
 
-Variable mainVariables[MAX_NUMBER_VARIABLES];
-int numberOfVariables = 0;
+extern Variable mainVariables[MAX_NUMBER_VARIABLES];
+extern int numberOfVariables;
 
 int initialize_window();
 void render();

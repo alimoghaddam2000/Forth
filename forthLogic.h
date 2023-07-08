@@ -20,53 +20,8 @@
 #define MAX_LINE 500
 #define MAX_COL 500
 
-char *keyWords[] = {
-    "do",
-    "loop",
-    "begin",
-    "until",
-    "+",
-    "*",
-    "/",
-    "-",
-    "%",
-    "mod",
-    "if",
-    "else",
-    "then",
-    "variable",
-    "constant",
-    "key",
-    "allot",
-    "=",
-    ">",
-    "<",
-    "and",
-    "or",
-    "invert",
-    "i",
-    "i'",
-    "j",
-    "dup",
-    ".",
-    "drop",
-    "swap",
-    "over",
-    "rot",
-    "@",
-    "!",
-    "+!",
-    "?",
-    ":",
-    ";",
-    "emit",
-    "cr",
-    ".\"",
-    "sleep",
-    "last-key",
-    "random",
-    "+loop"};
-int keyWordCount = sizeof(keyWords) / sizeof(keyWords[0]);
+extern char *keyWords[];
+extern int keyWordCount;
 
 enum States
 {
@@ -144,16 +99,16 @@ typedef struct
     enum Err err;
 } DoubleWithErr;
 
-Stack mainStack, returnStack;
-DefinedWord mainWords[MAX_NUMBER_WORDS];
-int numberOfWords = 0;
-enum States mainState = OFF;
-ifTemporary ifTemp;
-forTemporary forTemp;
-whileTemporary whileTemp;
-int lastVariableRef = MEMORY_START;
-Constant mainConstants[MAX_NUMBER_CONSTANTS];
-int numberOfConstants = 0;
+extern Stack mainStack, returnStack;
+extern DefinedWord mainWords[MAX_NUMBER_WORDS];
+extern int numberOfWords;
+extern enum States mainState;
+extern ifTemporary ifTemp;
+extern forTemporary forTemp;
+extern whileTemporary whileTemp;
+extern int lastVariableRef;
+extern Constant mainConstants[MAX_NUMBER_CONSTANTS];
+extern int numberOfConstants;
 
 int getLastChar();
 int getchCustom();

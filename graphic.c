@@ -1,5 +1,10 @@
 #include "./graphic.h"
 
+SDL_Window *window = NULL;
+SDL_Renderer *renderer = NULL;
+Variable mainVariables[MAX_NUMBER_VARIABLES];
+int numberOfVariables = 0;
+
 int initialize_window(void)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)

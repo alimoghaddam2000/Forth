@@ -1,5 +1,64 @@
 #include "./forthLogic.h"
 
+char *keyWords[] = {
+    "do",
+    "loop",
+    "begin",
+    "until",
+    "+",
+    "*",
+    "/",
+    "-",
+    "%",
+    "mod",
+    "if",
+    "else",
+    "then",
+    "variable",
+    "constant",
+    "key",
+    "allot",
+    "=",
+    ">",
+    "<",
+    "and",
+    "or",
+    "invert",
+    "i",
+    "i'",
+    "j",
+    "dup",
+    ".",
+    "drop",
+    "swap",
+    "over",
+    "rot",
+    "@",
+    "!",
+    "+!",
+    "?",
+    ":",
+    ";",
+    "emit",
+    "cr",
+    ".\"",
+    "sleep",
+    "last-key",
+    "random",
+    "+loop"};
+int keyWordCount = sizeof(keyWords) / sizeof(keyWords[0]);
+
+Stack mainStack, returnStack;
+DefinedWord mainWords[MAX_NUMBER_WORDS];
+int numberOfWords = 0;
+enum States mainState = OFF;
+ifTemporary ifTemp;
+forTemporary forTemp;
+whileTemporary whileTemp;
+int lastVariableRef = MEMORY_START;
+Constant mainConstants[MAX_NUMBER_CONSTANTS];
+int numberOfConstants = 0;
+
 int getchCustom()
 {
     return getch();
