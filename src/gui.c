@@ -1,15 +1,23 @@
-#include "./gui.h"
-
-const char *prompt = "~~>";
-const char *stackPrompt = "TOP ->";
-const char *bottomPrompt = "Thanks for using my app!!";
-WINDOW *stackWin, *mainWin, *bottomWin, *tabWin = NULL;
-int xMaxMain, yMaxMain, xMaxStack, yMaxStack, xMaxStdScr, yMaxStdScr;
-int line = 1, col = 0, row = 0, endLine = 0;
-char *buffer[MAX_LINE];
-char *bufferColor[MAX_LINE];
-enum Mode mode = NORMAL;
-int tabSelect = 0, tabStart = 0;
+/**************************************************************************
+ *   gui.c  --  This file is part of Forth project.                       *
+ *                                                                        *
+ *   Copyright (C) 2023 Ali Moghaddam.                                    *
+ *                                                                        *
+ *   Forth is free software: you can redistribute it and/or modify        *
+ *   it under the terms of the GNU General Public License as published    *
+ *   by Ali Moghaddam, either version 3 of the License,                   *
+ *   or (at your option) any later version.                               *
+ *                                                                        *
+ *   Forth is distributed in the hope that it will be useful,             *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty          *
+ *   of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.              *
+ *   See the GNU General Public License for more details.                 *
+ *                                                                        *
+ *   You should have received a copy of the GNU General Public License    *
+ *   along with this program.  If not, see http://www.gnu.org/licenses/.  *
+ *                                                                        *
+ **************************************************************************/
+#include "prototype.h"
 
 void showStack(Stack s)
 {
@@ -75,29 +83,6 @@ void customPrint(char input[MAX_CHAR_PRINT])
     printMainWindow();
     endLine--;
     wrefresh(mainWin);
-}
-
-void insertChar(char input[], char c, int index)
-{
-    for (int i = strlen(input); i >= index; i--)
-    {
-        input[i + 1] = input[i];
-    }
-    input[index] = c;
-}
-
-void removeChar(char input[], int index)
-{
-    for (int i = index; i < strlen(input); i++)
-    {
-        input[i] = input[i + 1];
-    }
-}
-
-void clearChar(char input[], int size)
-{
-    for (int i = 0; i < size; i++)
-        input[i] = '\0';
 }
 
 void drawBottomWin()
@@ -247,33 +232,6 @@ void validateLastLine(char *lastLine, char *lastLineColor)
     }
 }
 
-int spaceWord(char *line, char wordLine[MAX_NUMBER_COMMAND][MAX_COMMAND_LENGTH])
-{
-    int i1 = 0, i2 = 0;
-    for (int i = 0; i < strlen(line); i++)
-    {
-        if (isspace(line[i]))
-        {
-            if (i2 != 0)
-            {
-                wordLine[i1][i2] = '\0';
-                i2 = 0;
-                i1++;
-                continue;
-            }
-            continue;
-        }
-        wordLine[i1][i2] = line[i];
-        i2++;
-    }
-    if (i2 == 0)
-    {
-        return i1;
-    }
-    wordLine[i1][i2] = '\0';
-    return i1 + 1;
-}
-
 char validate(char *currentWord, char *prevWord, int mode, int isComment)
 {
     if (mode == PRINT || isComment || strcmp(currentWord, "(") == 0 || strcmp(currentWord, ")") == 0)
@@ -332,4 +290,17 @@ void drawTabWin(char *lastLine, int curserPoint)
             wattroff(tabWin, A_REVERSE);
     }
     wrefresh(tabWin);
+}
+
+int getchCustom()
+{
+    return getch();
+}
+
+int getLastChar()
+{
+    timeout(50);
+    int c = getch();
+    timeout(-1);
+    return c;
 }

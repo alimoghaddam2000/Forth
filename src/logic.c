@@ -1,123 +1,23 @@
-#include "./forthLogic.h"
-
-char *keyWords[] = {
-    "do",
-    "loop",
-    "begin",
-    "until",
-    "+",
-    "*",
-    "/",
-    "-",
-    "%",
-    "mod",
-    "if",
-    "else",
-    "then",
-    "variable",
-    "constant",
-    "key",
-    "allot",
-    "=",
-    ">",
-    "<",
-    "and",
-    "or",
-    "invert",
-    "i",
-    "i'",
-    "j",
-    "dup",
-    ".",
-    "drop",
-    "swap",
-    "over",
-    "rot",
-    "@",
-    "!",
-    "+!",
-    "?",
-    ":",
-    ";",
-    "emit",
-    "cr",
-    ".\"",
-    "sleep",
-    "last-key",
-    "random",
-    "+loop"};
-int keyWordCount = sizeof(keyWords) / sizeof(keyWords[0]);
-
-Stack mainStack, returnStack;
-DefinedWord mainWords[MAX_NUMBER_WORDS];
-int numberOfWords = 0;
-enum States mainState = OFF;
-ifTemporary ifTemp;
-forTemporary forTemp;
-whileTemporary whileTemp;
-int lastVariableRef = MEMORY_START;
-Constant mainConstants[MAX_NUMBER_CONSTANTS];
-int numberOfConstants = 0;
-
-int getchCustom()
-{
-    return getch();
-}
-
-int getLastChar()
-{
-    timeout(50);
-    int c = getch();
-    timeout(-1);
-    return c;
-}
-
-bool isFull(Stack *s)
-{
-    return s->top >= STACK_SIZE - 1 ? true : false;
-}
-
-bool isEmpty(Stack *s)
-{
-    return s->top <= -1 ? true : false;
-}
-
-enum Err push(Stack *s, double n)
-{
-    if (isFull(s))
-        return OVERFLOW_ERRCODE;
-    s->stack[++s->top] = n;
-    return NOERR;
-}
-
-DoubleWithErr pop(Stack *s)
-{
-    DoubleWithErr result;
-    if (isEmpty(s))
-        result.err = UNDERFLOW_ERRCODE;
-    else
-        result.err = NOERR;
-    result.d = result.err ? 0 : s->stack[s->top--];
-    return result;
-}
-
-DoubleWithErr peek(Stack *s, int i)
-{
-    DoubleWithErr res;
-    res.err = NOERR;
-    if (s->top == -1)
-    {
-        res.err = UNDERFLOW_ERRCODE;
-        return res;
-    }
-    if (i > s->top || i < 0)
-    {
-        res.err = OUT_OF_RANGE;
-        return res;
-    }
-    res.d = s->stack[i];
-    return res;
-}
+/**************************************************************************
+ *   logic.c  --  This file is part of Forth project.                     *
+ *                                                                        *
+ *   Copyright (C) 2023 Ali Moghaddam.                                    *
+ *                                                                        *
+ *   Forth is free software: you can redistribute it and/or modify        *
+ *   it under the terms of the GNU General Public License as published    *
+ *   by Ali Moghaddam, either version 3 of the License,                   *
+ *   or (at your option) any later version.                               *
+ *                                                                        *
+ *   Forth is distributed in the hope that it will be useful,             *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty          *
+ *   of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.              *
+ *   See the GNU General Public License for more details.                 *
+ *                                                                        *
+ *   You should have received a copy of the GNU General Public License    *
+ *   along with this program.  If not, see http://www.gnu.org/licenses/.  *
+ *                                                                        *
+ **************************************************************************/
+#include "prototype.h"
 
 enum Err calculate(char operator)
 {
@@ -153,50 +53,6 @@ enum Err calculate(char operator)
         break;
     }
     return NOERR;
-}
-
-DoubleWithErr isValidDouble(char input[])
-{
-    char *endPt;
-    double x;
-    DoubleWithErr res;
-    x = strtod(input, &endPt);
-    res.d = x;
-    if (*endPt != '\0' || strlen(input) == 0)
-        res.err = NOT_A_NUMBER_ERR;
-    else
-        res.err = NOERR;
-    return res;
-}
-
-int isValidWord(char input[])
-{
-    for (int i = 0; i < numberOfWords; i++)
-    {
-        if (strcmp(input, mainWords[i].commandName) == 0)
-            return i;
-    }
-    return -1;
-}
-
-int isValidVar(char input[])
-{
-    for (int i = 0; i < numberOfVariables; i++)
-    {
-        if (strcmp(input, mainVariables[i].name) == 0)
-            return i;
-    }
-    return -1;
-}
-
-int isValidConst(char input[])
-{
-    for (int i = 0; i < numberOfConstants; i++)
-    {
-        if (strcmp(input, mainConstants[i].name) == 0)
-            return i;
-    }
-    return -1;
 }
 
 enum Err executeOne(char input[])
@@ -810,13 +666,4 @@ enum Err execute(char input[][MAX_COMMAND_LENGTH], int size)
         }
     }
     return NOERR;
-}
-bool isValidKeyWord(char *word)
-{
-    for (int i = 0; i < keyWordCount; i++)
-    {
-        if (strcmp(word, keyWords[i]) == 0)
-            return true;
-    }
-    return false;
 }
