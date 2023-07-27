@@ -23,7 +23,7 @@ then you could easily build the project by running:
 make
 ```
 
-and for executing the program you run `./Final.out` on your terminal
+and for executing the program you run `./Forth.out` on your terminal
 
 For an example you can copy and paste content on snake.txt on your terminal and enjoy playing the snake game.
 
