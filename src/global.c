@@ -19,6 +19,8 @@
  **************************************************************************/
 #include "prototype.h"
 
+// initializing all global variables
+
 char *keyWords[] = {
     "do",
     "loop",

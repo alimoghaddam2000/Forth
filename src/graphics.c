@@ -27,7 +27,7 @@ int initialize_window(void)
         return false;
     }
     window = SDL_CreateWindow(
-        "Snake!!",
+        "Graphic Window",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
         WINDOW_WIDTH,
