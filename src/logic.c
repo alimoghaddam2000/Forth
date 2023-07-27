@@ -19,42 +19,62 @@
  **************************************************************************/
 #include "prototype.h"
 
+/**
+ * Calculates the result of an arithmetic operation using the given operator and the top two values from the mainStack.
+ *
+ * @param operator The arithmetic operator to be used for the calculation.
+ * @return The error code indicating the result of the calculation.
+ */
 enum Err calculate(char operator)
 {
-    DoubleWithErr x, y;
-    x = pop(&mainStack);
-    y = pop(&mainStack);
+    DoubleWithErr x, y;  // Variables to store the top two values from the mainStack
+    x = pop(&mainStack); // Get the top value from the mainStack and store it in x
+    y = pop(&mainStack); // Get the second top value from the mainStack and store it in y
+
+    // Check if the top value from the mainStack has an error
     if (x.err)
-        return x.err;
+        return x.err; // Return the error code of x
+
+    // Check if the second top value from the mainStack has an error
     if (y.err)
-        return y.err;
+        return y.err; // Return the error code of y
+
+    // Perform the arithmetic operation based on the given operator
     switch (operator)
     {
     case '+':
-        push(&mainStack, x.d + y.d);
+        push(&mainStack, x.d + y.d); // Push the result of addition to the mainStack
         break;
     case '-':
-        push(&mainStack, y.d - x.d);
+        push(&mainStack, y.d - x.d); // Push the result of subtraction to the mainStack
         break;
     case '*':
-        push(&mainStack, x.d * y.d);
+        push(&mainStack, x.d * y.d); // Push the result of multiplication to the mainStack
         break;
     case '/':
         if (x.d == 0)
-            return DIVISION_BY_ZERO;
-        push(&mainStack, y.d / x.d);
+            return DIVISION_BY_ZERO; // Return the error code DIVISION_BY_ZERO if x is zero
+        push(&mainStack, y.d / x.d); // Push the result of division to the mainStack
         break;
     case '%':
         if (x.d == 0 || (int)x.d == 0)
-            return DIVISION_BY_ZERO;
-        push(&mainStack, (int)y.d % (int)x.d);
+            return DIVISION_BY_ZERO;           // Return the error code DIVISION_BY_ZERO if x is zero or not an integer
+        push(&mainStack, (int)y.d % (int)x.d); // Push the result of modulo division to the mainStack
         break;
     default:
         break;
     }
+
+    // Return the error code NOERR indicating a successful calculation
     return NOERR;
 }
 
+/**
+ * execute given input
+ *
+ * @param  input given input to be execute.
+ * @return The error code indicating the result of the calculation.
+ */
 enum Err executeOne(char input[])
 {
     if (mainState == WAITING_FOR_WORD)
@@ -654,6 +674,13 @@ enum Err executeOne(char input[])
     return UNKNOWN_WORD;
 }
 
+/**
+ * Executes a series of commands stored in a 2D array of strings.
+ *
+ * @param input The 2D array of strings containing the commands to be executed.
+ * @param size The number of commands in the input array.
+ * @return The error code indicating the result of the execution.
+ */
 enum Err execute(char input[][MAX_COMMAND_LENGTH], int size)
 {
     enum Err e;

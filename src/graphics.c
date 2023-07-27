@@ -19,7 +19,12 @@
  **************************************************************************/
 #include "prototype.h"
 
-int initialize_window(void)
+/**
+ * Initializes the SDL library, creates a window and a renderer for graphics rendering.
+ *
+ * @return True if the initialization is successful, false otherwise.
+ */
+bool initialize_window(void)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
@@ -47,6 +52,9 @@ int initialize_window(void)
     return true;
 }
 
+/**
+ * Renders the graphics by clearing the renderer, drawing pixels based on the first (PIXEL_NUM*PIXEL_NUM) values in mainVariables(graphic array), and presenting the renderer.
+ */
 void render(void)
 {
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);

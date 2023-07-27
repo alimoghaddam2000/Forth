@@ -101,19 +101,24 @@ bool isValidKeyWord(char *);
 enum Err executeOne(char[]);
 enum Err execute(char[][MAX_COMMAND_LENGTH], int);
 
-void showStack(Stack);
-void customPrint(char[MAX_CHAR_PRINT]);
-void insertChar(char[], char, int);
-void removeChar(char[], int);
-void clearChar(char[], int);
+// initializing functions
 void initialization();
 void initColor();
+
+// UI functions
 void printMainWindow();
 void printLastLine(char *, char *);
 void validateLastLine(char *, char *);
-int spaceWord(char *, char[MAX_NUMBER_COMMAND][MAX_COMMAND_LENGTH]);
+void showStack(Stack);
+void customPrint(char[MAX_CHAR_PRINT]);
 char validate(char *, char *, int, int);
 void drawBottomWin();
 void drawTabWin(char *, int);
+
+// utils functions
+void insertChar(char[], char, int);
+void removeChar(char[], int);
+int spaceWord(char *, char[MAX_NUMBER_COMMAND][MAX_COMMAND_LENGTH]);
+void clearChar(char[], int);
 
 #endif

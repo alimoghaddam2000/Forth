@@ -19,6 +19,11 @@
  **************************************************************************/
 #include "prototype.h"
 
+/**
+ * Displays the contents of a stack in a window.
+ *
+ * @param s The stack to be displayed.
+ */
 void showStack(Stack s)
 {
     werase(stackWin);
@@ -57,6 +62,11 @@ void showStack(Stack s)
     wrefresh(stackWin);
 }
 
+/**
+ * Prints a custom input to the screen.
+ *
+ * @param input The message to be printed.
+ */
 void customPrint(char input[MAX_CHAR_PRINT])
 {
     for (int i = 0; i < strlen(input); i++)
@@ -85,12 +95,18 @@ void customPrint(char input[MAX_CHAR_PRINT])
     wrefresh(mainWin);
 }
 
+/**
+ * Draws the bottom window with a box and displays a prompt in the center.
+ */
 void drawBottomWin()
 {
     box(bottomWin, 0, 0);
     mvwprintw(bottomWin, 3, xMaxStdScr / 2 - strlen(bottomPrompt) / 2, bottomPrompt);
 }
 
+/**
+ * Performs the necessary initialization steps
+ */
 void initialization()
 {
     srand(time(NULL));
@@ -133,6 +149,9 @@ void initialization()
     initialize_window();
 }
 
+/**
+ * Initializes the color pairs used in the program.
+ */
 void initColor()
 {
     init_pair(COLOR_NORMAL, COLOR_WHITE, COLOR_BLACK);
@@ -145,6 +164,9 @@ void initColor()
     init_pair(COLOR_STRING, COLOR_CYAN, COLOR_BLACK);
 }
 
+/**
+ * Prints the contents of the main window.
+ */
 void printMainWindow()
 {
     werase(mainWin);
@@ -164,6 +186,12 @@ void printMainWindow()
     }
 }
 
+/**
+ * Prints the last line of the main window with the specified color.
+ *
+ * @param lastLine The last line to be printed.
+ * @param lastLineColor The color of each character in the last line.
+ */
 void printLastLine(char *lastLine, char *lastLineColor)
 {
     clearChar(lastLineColor, MAX_COL);
@@ -195,6 +223,12 @@ void printLastLine(char *lastLine, char *lastLineColor)
     free(finalLLColor);
 }
 
+/**
+ * Validates the last line of the main window and assigns the appropriate color to each character.
+ *
+ * @param lastLine The last line to be validated.
+ * @param lastLineColor The array to store the color of each character in the last line.
+ */
 void validateLastLine(char *lastLine, char *lastLineColor)
 {
     int mode = OFF;
@@ -232,6 +266,15 @@ void validateLastLine(char *lastLine, char *lastLineColor)
     }
 }
 
+/**
+ * Validates a word and determines its appropriate color based on the current mode and context.
+ *
+ * @param currentWord The word to be validated.
+ * @param prevWord The previous word in the line.
+ * @param mode The current mode.
+ * @param isComment Flag indicating if the word is inside a comment.
+ * @return The color code for the word.
+ */
 char validate(char *currentWord, char *prevWord, int mode, int isComment)
 {
     if (mode == PRINT || isComment || strcmp(currentWord, "(") == 0 || strcmp(currentWord, ")") == 0)
@@ -256,6 +299,12 @@ char validate(char *currentWord, char *prevWord, int mode, int isComment)
     return COLOR_WRONG;
 }
 
+/**
+ * Draws the tab window below the cursor, displaying suggestions based on the last entered word.
+ *
+ * @param lastLine The last line of the main window.
+ * @param cursorPoint The current position of the cursor.
+ */
 void drawTabWin(char *lastLine, int curserPoint)
 {
     char *word = strrchr(lastLine, ' ') + 1;
@@ -292,11 +341,21 @@ void drawTabWin(char *lastLine, int curserPoint)
     wrefresh(tabWin);
 }
 
+/**
+ * Custom implementation of the getch() function.
+ *
+ * @return The character read from the input.
+ */
 int getchCustom()
 {
     return getch();
 }
 
+/**
+ * Gets the last character entered within a specified timeout period.
+ *
+ * @return The last character entered.
+ */
 int getLastChar()
 {
     timeout(50);
