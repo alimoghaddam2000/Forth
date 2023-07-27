@@ -23,7 +23,7 @@ then you could easily build the project by running:
 make
 ```
 
-and for executing the program you run `./Final` on your terminal
+and for executing the program you run `./Final.out` on your terminal
 
 For an example you can copy and paste content on snake.txt on your terminal and enjoy playing the snake game.
 
@@ -32,7 +32,7 @@ For an example you can copy and paste content on snake.txt on your terminal and 
 ## This interpreter supports following key word:
 
 1. do, loop, +loop, begin, until, i, i', j
-2. - +, \* , /, %, mod
+2. -, +, *, /, %, mod
 3. if, else, then, =, <, >, and, or, invert
 4. variable, constant, allot, @
 5. dup, drop, swap, over, rot,
